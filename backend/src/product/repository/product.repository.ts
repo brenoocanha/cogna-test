@@ -6,6 +6,6 @@ export class ProductRepository {
   constructor(private readonly database: DatabaseService) {}
 
   async getAllProducts() {
-    return await this.database.
+    // return await this.database.
   }
 }

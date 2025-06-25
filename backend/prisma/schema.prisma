@@ -1,9 +1,54 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id                       String    @id @default(uuid())
+  name                     String    @db.VarChar(255)
+  email                    String    @unique @db.VarChar(255)
+  phone                    String    @unique @db.VarChar(20)
+  password                 String    @db.VarChar(255)
+  security_code            String?   @db.VarChar(6)
+  security_code_expiration DateTime?
+  security_code_used       Boolean   @default(false)
+  active                   Boolean   @default(false)
+  created_at               DateTime  @default(now())
+  updated_at               DateTime?
+  deleted_at               DateTime?
+
+  token Token[]
+}
+
+model Token {
+  id    String    @id @default(uuid())
+  token String    @db.VarChar(500)
+  type  TokenType
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user_id String
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, type])
+}
+
+model Product {
+  id          String    @id @default(uuid())
+  name        String    @db.VarChar(255)
+  description String?   @db.Text
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+  deleted_at  DateTime?
+}
+
+enum TokenType {
+  AUTH
+  REFRESH
 }
