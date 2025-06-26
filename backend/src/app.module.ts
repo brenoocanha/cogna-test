@@ -12,6 +12,7 @@ import { validateSync } from 'class-validator';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './auth/guards/guards.provider';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { AuthGuard } from './auth/guards/guards.provider';
     ProductModule,
     DatabaseModule,
     AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [
