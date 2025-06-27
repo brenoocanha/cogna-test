@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { TokenRepository } from './repository/token.repository';
+import { AuthService } from 'src/auth/service';
+import { TokenRepository } from 'src/auth/repository';
+import { AuthController } from 'src/auth/controller';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -10,7 +12,9 @@ import { TokenRepository } from './repository/token.repository';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: process.env.JWT_TOKEN_EXPIRES_IN },
     }),
+    UserModule,
   ],
+  controllers: [AuthController],
   providers: [AuthService, JwtService, TokenRepository],
   exports: [TokenRepository, AuthService],
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from 'src/database/service/database.service';
 import { UserRepositoryInterface } from 'src/user/repository';
 import { CreateUserDto, UpdateUserDto } from 'src/user/dto';
 import * as bcrypt from 'bcrypt';
@@ -29,6 +29,22 @@ export class UserRepository implements UserRepositoryInterface {
   findByIdOrThrow(id: User['id']): Promise<User> {
     return this.database.user.findUniqueOrThrow({
       where: { id },
+    });
+  }
+
+  /**
+   * Finds a user by their email address, excluding deleted users.
+   * @param email - The email address of the user to find.
+   * @returns A promise that resolves to the user if found, or null if not found.
+   */
+  findByEmail(email: User['email']): Promise<User | null> {
+    return this.database.user.findUnique({
+      where: {
+        email_is_deleted: {
+          email,
+          is_deleted: false,
+        },
+      },
     });
   }
 
@@ -71,19 +87,44 @@ export class UserRepository implements UserRepositoryInterface {
     });
   }
 
+  async updatePasswordById(
+    id: User['id'],
+    hashedPassword: string,
+  ): Promise<{ message: string }> {
+    return this.database.user
+      .update({
+        where: { id },
+        data: {
+          password: hashedPassword,
+          security_code: null,
+          security_code_expiration: null,
+          security_code_used: true,
+        },
+      })
+      .then(() => ({ message: 'Password updated successfully' }));
+  }
+
   /**
    * Deletes a user by marking them as deleted in the database.
    * @param id - The ID of the user to delete.
    * @returns A promise that resolves when the user is marked as deleted.
    */
   async delete(id: User['id']): Promise<void> {
-    return this.database.user
-      .update({
-        where: { id },
-        data: { deleted_at: new Date(), is_deleted: true },
-      })
-      .then(() => {
-        return;
-      });
+    await this.database.user.update({
+      where: { id },
+      data: { deleted_at: new Date(), is_deleted: true },
+    });
+  }
+
+  /**
+   * Updates the last login timestamp for a user.
+   * @param id - The ID of the user to update.
+   * @returns A promise that resolves when the last login is updated.
+   */
+  async updateLastLoginByUserId(id: User['id']): Promise<void> {
+    await this.database.user.update({
+      where: { id },
+      data: { last_login: new Date() },
+    });
   }
 }

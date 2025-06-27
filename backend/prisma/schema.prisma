@@ -13,6 +13,7 @@ model User {
   email                    String    @db.VarChar(255)
   phone                    String    @db.VarChar(20)
   password                 String    @db.VarChar(255)
+  last_login               DateTime?
   security_code            String?   @db.VarChar(6)
   security_code_expiration DateTime?
   security_code_used       Boolean   @default(false)

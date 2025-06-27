@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 import { DatabaseModule } from './database/database.module';
-import { DatabaseService } from './database/database.service';
+import { DatabaseService } from './database/service/database.service';
 import { ConfigModule } from '@nestjs/config';
 import config from './config';
 import { plainToInstance } from 'class-transformer';
@@ -11,7 +11,7 @@ import { EnvValidationSchema } from './config/env-validation.schema';
 import { validateSync } from 'class-validator';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
-import { AuthGuard } from './auth/guards/guards.provider';
+import { AuthGuard } from 'src/auth/guards';
 import { UserModule } from './user/user.module';
 
 @Module({
