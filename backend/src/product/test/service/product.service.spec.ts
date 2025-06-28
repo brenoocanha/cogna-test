@@ -42,9 +42,7 @@ describe('ProductService', () => {
 
   describe('getAllProducts', () => {
     it('should return an array of products', async () => {
-      const mockProducts: Product[] = [
-        /* Seus dados de produto aqui */
-      ];
+      const mockProducts: Product[] = [];
       mockProductRepository.getAllProducts.mockResolvedValue(mockProducts);
       const result = await service.getAllProducts();
       expect(result).toEqual(mockProducts);
