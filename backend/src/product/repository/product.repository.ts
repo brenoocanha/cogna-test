@@ -1,11 +1,48 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/database/service/database.service';
+import { Product } from '@prisma/client';
+import { DatabaseService } from 'src/database/service';
+import { ProductRepositoryInterface } from 'src/product/repository';
+import { CreateProductDto, UpdateProductStockDto } from 'src/product/dto';
 
 @Injectable()
-export class ProductRepository {
+export class ProductRepository implements ProductRepositoryInterface {
   constructor(private readonly database: DatabaseService) {}
 
-  async getAllProducts() {
-    return await this.database.product.findMany();
+  getAllProducts(): Promise<Product[]> {
+    return this.database.product.findMany();
+  }
+
+  getProductById(id: Product['id']): Promise<Product | null> {
+    return this.database.product.findUnique({
+      where: { id },
+    });
+  }
+
+  createProduct(data: CreateProductDto): Promise<Product> {
+    return this.database.product.create({
+      data,
+    });
+  }
+
+  updateProductStockByProductId(
+    id: Product['id'],
+    { stock }: UpdateProductStockDto,
+  ): Promise<Product | null> {
+    return this.database.product.update({
+      where: { id },
+      data: {
+        stock,
+      },
+    });
+  }
+
+  updateProductById(
+    id: Product['id'],
+    data: Partial<CreateProductDto>,
+  ): Promise<Product | null> {
+    return this.database.product.update({
+      where: { id },
+      data,
+    });
   }
 }

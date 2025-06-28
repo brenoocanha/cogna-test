@@ -17,8 +17,6 @@ export class UserController {
   @Public()
   @Post()
   createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
-    // This method should be implemented to create a user.
-    // For now, it returns a placeholder.
     return this.userService.create(createUserDto);
   }
 }

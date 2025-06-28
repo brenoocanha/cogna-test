@@ -46,8 +46,11 @@ model Token {
 
 model Product {
   id          String    @id @default(uuid())
-  name        String    @db.VarChar(255)
+  name        String    @unique @db.VarChar(255)
   description String?   @db.Text
+  price       Decimal   @db.Decimal(10, 2)
+  stock       Int       @default(0)
+  imageUrl    String?   @db.VarChar(255)
   created_at  DateTime  @default(now())
   updated_at  DateTime?
   deleted_at  DateTime?
