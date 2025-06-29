@@ -34,8 +34,7 @@ services:
     ports:
       - '4000:4000'
     environment:
-      # Esta ENV é para o Next.js em tempo de execução
-      NEXT_PUBLIC_API_URL: http://localhost:3000
+      NEXT_PUBLIC_API_URL: http://backend:3000
     depends_on:
       - backend
     networks:

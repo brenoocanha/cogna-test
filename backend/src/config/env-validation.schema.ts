@@ -15,26 +15,6 @@ export class EnvValidationSchema {
 
   @IsString()
   @IsNotEmpty()
-  DB_HOST: string;
-
-  @IsString()
-  @IsNotEmpty()
-  DB_USER: string;
-
-  @IsString()
-  @IsNotEmpty()
-  DB_PASSWORD: string;
-
-  @IsString()
-  @IsNotEmpty()
-  DB_NAME: string;
-
-  @IsString()
-  @IsNotEmpty()
-  DB_PORT: string;
-
-  @IsString()
-  @IsNotEmpty()
   DATABASE_URL: string;
 
   @IsString()
