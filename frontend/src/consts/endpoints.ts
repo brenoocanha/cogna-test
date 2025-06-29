@@ -4,6 +4,7 @@ const API_ENDPOINTS = {
   refreshToken: '/auth/refresh',
   products: '/product/all',
   productById: (id: string) => `/product/${id}`,
+  createProduct: '/product',
 };
 
 export default API_ENDPOINTS;

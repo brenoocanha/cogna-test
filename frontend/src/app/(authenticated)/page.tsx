@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/core/ProductCard';
 import LogoutButton from '@/components/core/LogoutButton';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 export default async function ProductsPage() {
   const products = await fetchProducts();
@@ -30,6 +31,15 @@ export default async function ProductsPage() {
           <div className="absolute top-2 right-2">
             <LogoutButton logoutFn={logout} />
           </div>
+          {products.length > 0 && (
+            <div className="w-full flex justify-center mb-6">
+              <Link href={'/products/registrar'} className="w-full">
+                <Button className="w-full max-w-full cursor-pointer">
+                  Cadastrar Produto
+                </Button>
+              </Link>
+            </div>
+          )}
 
           {/* Mobile Products Grid */}
           <div className="grid grid-cols-1 gap-6">
@@ -40,9 +50,20 @@ export default async function ProductsPage() {
           </div>
 
           {products.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">Nenhum produto encontrado</p>
-            </div>
+            <>
+              <div className="text-center py-12">
+                <p className="text-gray-500 text-lg">
+                  Nenhum produto encontrado
+                </p>
+              </div>
+              <div className="w-full flex justify-center mb-6">
+                <Link href={'/products/registrar'} className="w-full">
+                  <Button className="w-full max-w-full cursor-pointer">
+                    Cadastrar Produto
+                  </Button>
+                </Link>
+              </div>
+            </>
           )}
         </div>
       </div>
@@ -68,6 +89,15 @@ export default async function ProductsPage() {
               </div>
             </CardHeader>
           </Card>
+          {products.length > 0 && (
+            <div className="w-full flex justify-center mb-6">
+              <Link href={'/products/registrar'} className="w-full">
+                <Button className="w-full max-w-full cursor-pointer flex">
+                  Cadastrar Produto
+                </Button>
+              </Link>
+            </div>
+          )}
 
           {/* Desktop Products Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -83,7 +113,11 @@ export default async function ProductsPage() {
                 <p className="text-gray-500 text-lg">
                   Nenhum produto encontrado
                 </p>
-                <Button className="mt-4">Explorar categorias</Button>
+                <Link href={'/products/registrar'}>
+                  <Button className="mt-4 cursor-pointer">
+                    Cadastrar Produto
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           )}
