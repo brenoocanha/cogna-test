@@ -93,6 +93,7 @@ export default function RegisterPageLayout() {
                   autoComplete="name"
                   placeholder="Insira seu nome completo"
                   className="h-12 text-base"
+                  onChange={(e) => setValue('name', e.target.value)}
                 />
                 {errors.name && (
                   <p className="mt-1 text-sm text-red-600">
@@ -117,6 +118,7 @@ export default function RegisterPageLayout() {
                   autoComplete="email"
                   placeholder="Insira seu email"
                   className="h-12 text-base"
+                  onChange={(e) => setValue('email', e.target.value)}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">
@@ -171,6 +173,7 @@ export default function RegisterPageLayout() {
                   autoComplete="new-password"
                   placeholder="Insira sua senha"
                   className="h-12 text-base"
+                  onChange={(e) => setValue('password', e.target.value)}
                 />
                 {errors.password && (
                   <p className="mt-1 text-sm text-red-600">

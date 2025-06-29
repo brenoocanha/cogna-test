@@ -9,6 +9,8 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/core/ProductCard';
+import LogoutButton from '@/components/core/LogoutButton';
+import { redirect } from 'next/navigation';
 
 export default async function ProductsPage() {
   const products = await fetchProducts();
@@ -17,13 +19,16 @@ export default async function ProductsPage() {
     <div className="min-h-screen bg-white sm:bg-gray-50">
       {/* Mobile Layout */}
       <div className="sm:hidden">
-        <div className="px-6 py-8">
+        <div className="px-6 py-8 relative">
           {/* Mobile Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
               Produtos
             </h1>
             <p className="mt-2 text-gray-600">Descubra nossos produtos</p>
+          </div>
+          <div className="absolute top-2 right-2">
+            <LogoutButton logoutFn={logout} />
           </div>
 
           {/* Mobile Products Grid */}
@@ -48,7 +53,7 @@ export default async function ProductsPage() {
           {/* Desktop Header */}
           <Card className="mb-8">
             <CardHeader>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 relative">
                 <div>
                   <CardTitle className="text-3xl font-bold text-gray-900">
                     Produtos
@@ -56,6 +61,9 @@ export default async function ProductsPage() {
                   <CardDescription className="text-lg">
                     Descubra nossa coleção de produtos
                   </CardDescription>
+                </div>
+                <div className="absolute top-2 right-2">
+                  <LogoutButton logoutFn={logout} />
                 </div>
               </div>
             </CardHeader>
@@ -89,4 +97,10 @@ async function fetchProducts() {
   'use server';
   const { getProductsAction } = await import('@/actions/get-products.action');
   return getProductsAction();
+}
+
+async function logout() {
+  'use server';
+  const { logout } = await import('@/lib/server/utils');
+  return logout().then(() => redirect('/login'));
 }

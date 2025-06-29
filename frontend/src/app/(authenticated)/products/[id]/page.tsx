@@ -36,7 +36,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="px-6 py-8">
           {/* Mobile Header */}
           <div className="flex items-center justify-between mb-6">
-            <Link href="/products">
+            <Link href="/">
               <Button variant="ghost" size="sm" className="p-2">
                 <ArrowLeft className="h-5 w-5" />
               </Button>

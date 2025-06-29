@@ -30,6 +30,7 @@ export default function LoginPageLayout() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -70,6 +71,7 @@ export default function LoginPageLayout() {
                   autoComplete="email"
                   placeholder="Insira seu email"
                   className="h-12 text-base"
+                  onChange={(e) => setValue('email', e.target.value)}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">
@@ -94,24 +96,13 @@ export default function LoginPageLayout() {
                   autoComplete="current-password"
                   placeholder="Insira sua senha"
                   className="h-12 text-base"
+                  onChange={(e) => setValue('password', e.target.value)}
                 />
                 {errors.password && (
                   <p className="mt-1 text-sm text-red-600">
                     {errors.password.message}
                   </p>
                 )}
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="text-sm">
-                <Button
-                  type="button"
-                  variant="link"
-                  className="px-0 text-blue-600 hover:text-blue-500"
-                >
-                  Esqueci minha senha
-                </Button>
               </div>
             </div>
 
@@ -198,11 +189,6 @@ export default function LoginPageLayout() {
                 </p>
               )}
             </div>
-            <div className="flex items-center justify-between">
-              <Button type="button" variant="link" className="px-0 font-normal">
-                Esqueci minha senha
-              </Button>
-            </div>
 
             {loginMutation.error && (
               <div className="text-sm text-red-600 text-center">
@@ -213,7 +199,7 @@ export default function LoginPageLayout() {
             <Button
               type="submit"
               disabled={loginMutation.isPending}
-              className="w-full h-11"
+              className="w-full h-11 cursor-pointer"
             >
               {loginMutation.isPending ? <>Acessando...</> : 'Acessar'}
             </Button>
