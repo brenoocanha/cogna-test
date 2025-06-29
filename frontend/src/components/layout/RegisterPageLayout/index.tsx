@@ -30,7 +30,6 @@ export default function RegisterPageLayout() {
   const {
     register,
     handleSubmit,
-    control,
     setValue,
     watch,
     formState: { errors },

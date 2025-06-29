@@ -17,7 +17,7 @@ model User {
   security_code            String?   @db.VarChar(6)
   security_code_expiration DateTime?
   security_code_used       Boolean   @default(false)
-  active                   Boolean   @default(false)
+  active                   Boolean   @default(true)
   is_deleted               Boolean   @default(false)
   created_at               DateTime  @default(now())
   updated_at               DateTime?
