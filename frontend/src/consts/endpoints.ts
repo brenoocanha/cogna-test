@@ -1,5 +1,6 @@
 const API_ENDPOINTS = {
   login: '/auth/login',
+  register: '/user',
   refreshToken: '/auth/refresh',
   products: '/product/all',
 };
