@@ -12,7 +12,6 @@ export async function loginAction(form: LoginFormData) {
   } = constants;
   const { baseRequestHeaders: headers } = config;
 
-  console.log('A', apiUrl + loginUrl);
   const res = await fetch(apiUrl + loginUrl, {
     method: 'POST',
     headers,
@@ -23,7 +22,6 @@ export async function loginAction(form: LoginFormData) {
 
   if (!res.ok) {
     throw new Error(data.message || 'Ocorreu um erro ao tentar fazer login.');
-    // throw new Error(data.message || 'Ocorreu um erro ao tentar fazer login.');
   }
   return data;
 }

@@ -59,7 +59,7 @@ export async function middleware(req: NextRequest) {
       });
       response.cookies.set(
         constants.AUTH_REFRESH_TOKEN_COOKIE_NAME,
-        data.refreshToken,
+        data.refresh_token,
         {
           maxAge: 60 * 60 * 24 * 3,
           secure: process.env.NODE_ENV === 'production',
