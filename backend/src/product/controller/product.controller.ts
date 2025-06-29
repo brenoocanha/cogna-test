@@ -16,7 +16,7 @@ export class ProductController {
     return await this.productService.getAllProducts();
   }
 
-  @Get()
+  @Get(':id')
   async procuctById(@Param() { id }: ParamIDDto) {
     return await this.productService.getProductById(id);
   }
