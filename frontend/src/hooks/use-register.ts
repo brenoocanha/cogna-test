@@ -13,7 +13,12 @@ export function useRegister() {
 
   return useMutation({
     mutationFn,
-    onSuccess: () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSuccess: (data: any) => {
+      if (data.error) {
+        toast.error(data.error);
+        return;
+      }
       toast.success('Registro realizado com sucesso!');
       router.push('/login');
     },

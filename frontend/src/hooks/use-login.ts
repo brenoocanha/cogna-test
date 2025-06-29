@@ -15,7 +15,12 @@ export function useLogin() {
 
   return useMutation({
     mutationFn,
-    onSuccess: (data) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSuccess: (data: any) => {
+      if (data.error) {
+        toast.error(data.error);
+        return;
+      }
       const expires2h = new Date(Date.now() + 2 * 60 * 60 * 1000).toUTCString();
       const expires2d = new Date(
         Date.now() + 2 * 24 * 60 * 60 * 1000

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
 import config from '@/config';
@@ -14,18 +15,26 @@ export async function registerAction(
   } = constants;
   const { baseRequestHeaders: headers } = config;
 
-  const res = await fetch(apiUrl + registerUrl, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(form),
-  });
+  try {
+    const res = await fetch(apiUrl + registerUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(form),
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (!res.ok) {
-    throw new Error(data.message || 'Ocorreu um erro ao tentar se registrar.');
+    if (!res.ok) {
+      throw new Error(
+        data.message || 'Ocorreu um erro ao tentar se registrar.'
+      );
+    }
+    return data;
+  } catch (error: any) {
+    return {
+      error: error.message || 'Ocorreu um erro ao tentar fazer login.',
+    } as any;
   }
-  return data;
 }
 
 export interface LoginActionParams {

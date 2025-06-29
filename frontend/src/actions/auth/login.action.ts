@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
 import config from '@/config';
@@ -14,18 +15,24 @@ export async function loginAction(
   } = constants;
   const { baseRequestHeaders: headers } = config;
 
-  const res = await fetch(apiUrl + loginUrl, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(form),
-  });
+  try {
+    const res = await fetch(apiUrl + loginUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(form),
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (!res.ok) {
-    throw new Error(data.message || 'Ocorreu um erro ao tentar fazer login.');
+    if (!res.ok) {
+      throw new Error(data.message || 'Ocorreu um erro ao tentar fazer login.');
+    }
+    return data;
+  } catch (error: any) {
+    return {
+      error: error.message || 'Ocorreu um erro ao tentar fazer login.',
+    } as any;
   }
-  return data;
 }
 
 export interface LoginActionParams {
