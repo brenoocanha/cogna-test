@@ -15,15 +15,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Product } from '@/types';
 
-interface ProductPageProps {
-  params: {
-    id: Product['id'];
-  };
-}
+type Params = Promise<{ id: string }>;
 
-export default async function ProductPage({ params }: ProductPageProps) {
-  console.log('Fetching product with ID:', params.id);
-  const product = await fetchProduct(params.id);
+export default async function Page({ params }: { params: Params }) {
+  const { id } = await params;
+  console.log('Fetching product with ID:', id);
+  const product = await fetchProduct(id);
 
   if (!product) {
     notFound();

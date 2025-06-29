@@ -7,6 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getApiUrl() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-  if (!baseUrl) throw new Error('NEXT_PUBLIC_API_URL is not defined');
-  return baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  if (!baseUrl) console.error('NEXT_PUBLIC_API_URL is not defined');
+  return baseUrl?.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 }

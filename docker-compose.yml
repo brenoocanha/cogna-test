@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # Serviço do Backend (NestJS)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cogna-backend-multi
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      # A URL de conexão usa o nome do serviço 'postgres' como host
+      DATABASE_URL: 'postgresql://postgres:devpass@postgres:5432/cogna?schema=public'
+      JWT_SECRET: Yl9XdoH1OLJMXD2MGVaZPMULgKTavfpz74ps13zwXuhsGrUy9b
+      JWT_TOKEN_EXPIRES_IN: 2h
+      JWT_REFRESH_SECRET: 55afo2lzY4G9MaEf9VHs91WMJw6zYrSzH3gxUAbhuiyZAxhh7v
+      JWT_REFRESH_EXPIRES_IN: 2d
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  # Serviço do Frontend (Next.js)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cogna-frontend-multi
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+    environment:
+      # Esta ENV é para o Next.js em tempo de execução
+      NEXT_PUBLIC_API_URL: http://localhost:3000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # Serviço do Banco de Dados (PostgreSQL)
+  postgres:
+    image: postgres:14-alpine
+    container_name: cogna-postgres-multi
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: devpass
+      POSTGRES_DB: cogna
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+    driver: local
