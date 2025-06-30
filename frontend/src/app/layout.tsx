@@ -15,8 +15,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Cogna Demo',
-  description: 'Front-end demo for Cogna',
+  title: {
+    default: 'Desafio Cogna',
+    template: `%s | Desafio Cogna`,
+  },
+  description:
+    'Demosntração de um front-end moderno e responsivo para uma vitrine de produtos.',
+  openGraph: {
+    title: 'Desafio Técnico Cogna',
+    description:
+      'Demosntração de um front-end moderno e responsivo para uma vitrine de produtos.',
+    url: 'https://github.com/brenoocanha/cogna-test',
+    siteName: 'Desafio Técnico Cogna',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
